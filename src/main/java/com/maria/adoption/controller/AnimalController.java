@@ -4,13 +4,15 @@ import com.maria.adoption.entities.Animal;
 import com.maria.adoption.repositories.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 
-@RestController
+@Controller
 @RequestMapping("/animals")
 public class AnimalController {
     private final AnimalRepository animalRepository;
@@ -20,32 +22,26 @@ public class AnimalController {
         this.animalRepository = animalRepository;
     }
 
-    @GetMapping("")
-    public List<Animal> getAllAnimals() {
-        return animalRepository.findAll();
+
+    @GetMapping
+    public String animalsPage(Model model) {
+        List<Animal> animals = this.animalRepository.findAll();
+        model.addAttribute("formAnimal", new Animal());
+        model.addAttribute("animals", animals);
+        return "animals";
     }
 
-    @GetMapping("/{id}")
-    public Animal getAnimalByID(@PathVariable Integer id) {
-        return animalRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    @GetMapping("/add")
+    public String animalForm(Model model) {
+        model.addAttribute("formAnimal", new Animal());
+        return "add-animal";
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteAnimalById(@PathVariable Integer id) {
-        animalRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        animalRepository.deleteById(id);
-    }
+    @PostMapping
+    public String animalSubmit(@ModelAttribute Animal animal, Model model) {
+        model.addAttribute("formAnimal", animal);
 
-    @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Animal addAnimal(@RequestBody Animal animal) {
-       return this.animalRepository.save(animal);
-    }
-
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void updateAnimal(@PathVariable Integer id, @RequestBody Animal animal) {
-        animalRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         this.animalRepository.save(animal);
+        return animalsPage(model);
     }
 }
