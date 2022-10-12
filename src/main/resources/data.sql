@@ -1,0 +1,4 @@
+-- REPLACE INTO roles VALUES (1, 'ADMIN');
+-- REPLACE INTO roles VALUES (2, 'USER');
+-- REPLACE INTO users VALUES (1, 'Maria', '$2a$10$yMObL5oZf8NIpmCF30rOsuME6cW/jAvm5jdkiKQamFcpBn7ZkEk42', 'admin');
+-- REPLACE INTO user_role VALUES (1, 1);

@@ -22,13 +22,19 @@ public class AnimalController {
         this.animalRepository = animalRepository;
     }
 
-
     @GetMapping
     public String animalsPage(Model model) {
         List<Animal> animals = this.animalRepository.findAll();
         model.addAttribute("formAnimal", new Animal());
         model.addAttribute("animals", animals);
-        return "animals";
+        return "animal-list";
+    }
+
+    @GetMapping("/{id}")
+    public String animalDetails(Model model, @PathVariable Integer id) {
+        Animal animal = animalRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        model.addAttribute("animal", animal);
+        return "animal";
     }
 
     @GetMapping("/add")
