@@ -14,7 +14,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -38,12 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/login").permitAll()
 //                .antMatchers("/registration").permitAll()
 //                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
-                .usernameParameter("user_name")
-                .passwordParameter("password")
-                .and().logout()
+                .authenticated().and().csrf().disable()
+                .formLogin((form) -> form.loginPage("/login").permitAll())
+//                .failureUrl("/login?error=true")
+//                .defaultSuccessUrl("/admin/home")
+//                .usernameParameter("user_name")
+//                .passwordParameter("password")
+//                .and().logout()
+                .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").and().exceptionHandling()
                 .accessDeniedPage("/access-denied");

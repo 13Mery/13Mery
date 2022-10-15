@@ -5,7 +5,6 @@ import com.maria.adoption.entities.User;
 import com.maria.adoption.repositories.RoleRepository;
 import com.maria.adoption.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +35,7 @@ public class UserService {
         User admin = this.findByUsername("admin");
         if (admin == null) {
             admin = new User();
+            System.out.println("What?!");
             admin.setUsername("admin");
             admin.setName("Maria");
             admin.setPassword("admin");
@@ -54,4 +54,6 @@ public class UserService {
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         return userRepository.save(user);
     }
+
+
 }
