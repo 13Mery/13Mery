@@ -15,7 +15,15 @@
           <a th:href="@{/login}" class="btn btn-primary">Log In</a>
           <a th:href="@{/register}" class="btn btn-secondary">Register</a>
         </div>
-        <span th:unless="${loginName == ''}" th:text="'Welcome, ' + ${loginName}"></span>
+        <div th:unless="${loginName == ''}" class="d-flex align-items-center">
+          <span th:text="'Welcome, ' + ${loginName}" class="d-inline-block mx-3 fs-5"></span>
+          <a
+                  th:href="@{/logout}"
+                  class="btn btn-secondary d-inline-flex align-items-center"
+                  style="height: 30px;">
+            Logout
+          </a>
+        </div>
       </div>
     </div>
   </nav>
