@@ -14,11 +14,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private final AdoptionUserDetailsService userDetailsService;
 
     @Autowired
-    private AdoptionUserDetailsService userDetailsService;
+    public SecurityConfig(
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            AdoptionUserDetailsService userDetailsService) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -33,17 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.
                 authorizeHttpRequests()
                 .antMatchers("/**").permitAll().anyRequest()
-//                .antMatchers("/img/**").permitAll()
-//                .antMatchers("/login").permitAll()
-//                .antMatchers("/registration").permitAll()
-//                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable()
                 .formLogin((form) -> form.loginPage("/login").permitAll())
-//                .failureUrl("/login?error=true")
-//                .defaultSuccessUrl("/admin/home")
-//                .usernameParameter("user_name")
-//                .passwordParameter("password")
-//                .and().logout()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").and().exceptionHandling()

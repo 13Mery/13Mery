@@ -21,4 +21,13 @@ public class Animal {
     private String name;
     private Integer age;
     private String description;
+
+    // The user who proposed the animal for adoption
+    @ManyToOne
+    @JoinColumn(name="poster_id", nullable = false)
+    private User poster;
+
+    public String getPosterName() {
+        return this.poster.getName();
+    }
 }

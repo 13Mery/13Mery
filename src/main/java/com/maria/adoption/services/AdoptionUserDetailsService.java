@@ -25,13 +25,11 @@ public class AdoptionUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public AdoptionUserDetails loadUserByUsername(String username) {
-        System.out.println("Here!");
         User user = userService.findByUsername(username);
         Set<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         AdoptionUserDetails userDetails = new AdoptionUserDetails();
         userDetails.setAuthorities(authorities);
         userDetails.setUser(user);
-//        return buildUserForAuthentication(user, authorities);
         return userDetails;
     }
 
@@ -42,8 +40,4 @@ public class AdoptionUserDetailsService implements UserDetailsService {
         }
         return roles;
     }
-//    private AdoptionUserDetails buildUserForAuthentication(User user, Set<GrantedAuthority> authorities) {
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-//                true, true, true, true, authorities);
-//    }
 }

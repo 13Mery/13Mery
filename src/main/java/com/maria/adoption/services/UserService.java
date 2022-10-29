@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -32,16 +30,42 @@ public class UserService {
             adminRole.setRole("ADMIN");
             roleRepository.save(adminRole);
         }
+
+        Role userRole = roleRepository.findByRole("USER");
+        if (userRole == null) {
+            userRole = new Role();
+            userRole.setRole("USER");
+            roleRepository.save(userRole);
+        }
+    }
+
+    private void seedAdminUser() {
+        Role adminRole = roleRepository.findByRole("ADMIN");
         User admin = this.findByUsername("admin");
         if (admin == null) {
             admin = new User();
-            System.out.println("What?!");
             admin.setUsername("admin");
             admin.setName("Maria");
             admin.setPassword("admin");
             admin.setRoles(Set.of(adminRole));
             this.saveUser(admin);
         }
+    }
+
+    public List<User> seedTestUsers(int n) {
+        Role userRole = roleRepository.findByRole("USER");
+        List<User> testUsers = new ArrayList<>();
+        for (int i=0; i<n; i++) {
+            User user = new User();
+            int num = i + 1;
+            user.setUsername("testuser" + num);
+            user.setPassword("user");
+            user.setName("Test User " + num);
+            user.setRoles(Set.of(userRole));
+            testUsers.add(user);
+            this.saveUser(user);
+        }
+        return testUsers;
     }
 
     public User findByUsername(String username) {

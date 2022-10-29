@@ -1,7 +1,9 @@
 package com.maria.adoption.controller;
 
 import com.maria.adoption.entities.Animal;
+import com.maria.adoption.entities.User;
 import com.maria.adoption.repositories.AnimalRepository;
+import com.maria.adoption.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -16,10 +19,12 @@ import java.util.List;
 @RequestMapping("/animals")
 public class AnimalController {
     private final AnimalRepository animalRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AnimalController(AnimalRepository animalRepository) {
+    public AnimalController(AnimalRepository animalRepository, UserRepository userRepository) {
         this.animalRepository = animalRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -44,9 +49,9 @@ public class AnimalController {
     }
 
     @PostMapping
-    public String animalSubmit(@ModelAttribute Animal animal, Model model) {
-        model.addAttribute("formAnimal", animal);
-
+    public String animalSubmit(@ModelAttribute Animal animal, Model model, Principal principal) {
+        User poster = userRepository.findByUsername(principal.getName());
+        animal.setPoster(poster);
         this.animalRepository.save(animal);
         return animalsPage(model);
     }

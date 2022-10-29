@@ -12,6 +12,7 @@
           <div class="card-title fs-3" th:text="${animal.name}"></div>
           <div class="card-text" th:text="'Age: ' + ${animal.age}"></div>
           <div class="card-text mt-2" th:text="${animal.description}"></div>
+          <div class="card-text mt-2" th:text="'Posted by: ' + ${animal.posterName}"></div>
           <a href="#" class="btn btn-primary mt-3">Adopt</a>
         </div>
       </div>

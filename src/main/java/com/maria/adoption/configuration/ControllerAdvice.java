@@ -1,7 +1,6 @@
 package com.maria.adoption.configuration;
 
 import com.maria.adoption.AdoptionUserDetails;
-import com.maria.adoption.entities.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
