@@ -28,5 +28,8 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "poster")
-    private Set<Animal> animals;
+    private Set<Animal> adoption_offers;
+
+    @OneToMany(mappedBy = "adopter")
+    private Set<Animal> adopted_animals;
 }

@@ -58,8 +58,8 @@ public class UserService {
         for (int i=0; i<n; i++) {
             User user = new User();
             int num = i + 1;
-            user.setUsername("testuser" + num);
-            user.setPassword("user");
+            user.setUsername("test" + num);
+            user.setPassword("test");
             user.setName("Test User " + num);
             user.setRoles(Set.of(userRole));
             testUsers.add(user);

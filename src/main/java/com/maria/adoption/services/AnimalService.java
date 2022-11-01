@@ -28,7 +28,7 @@ public class AnimalService {
 
         String[] names = {
                 "Aiurica",
-                "Rex",
+                "Rex si Bimbo",
                 "Nero",
                 "Scooby",
                 "Alma",
@@ -36,11 +36,11 @@ public class AnimalService {
                 "Toto"
         };
 
-        int[] ages = {2, 4, 1, 5, 12, 1, 13};
+        int[] ages = {2, 1, 4, 5, 12, 1, 13};
 
         String[] descriptions = {
                 "S-a pierdut, saracul",
-                "Cel mai cuminte baiat",
+                "Cei mai cuminti baieti",
                 "Bun pentru copii",
                 "Are nevoie de o sansa",
                 "Este foarte bland",

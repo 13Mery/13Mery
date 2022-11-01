@@ -45,8 +45,6 @@ public class AuthController {
         if (!bindingResult.hasErrors()) {
             String password = formUser.getPassword();
             userService.saveUser(formUser);
-//            model.addAttribute("successMessage", "User has been registered successfully.");
-//            model.addAttribute("user", new User());
             System.out.println(formUser.getPassword());
             request.login(formUser.getUsername(), password);
             return "redirect:/";

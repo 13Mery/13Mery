@@ -5,10 +5,20 @@
 <div class="app">
   <div th:replace="fragments/header :: header"></div>
   <div class="container py-4 d-flex flex-column align-items-center">
-    <div class="fs-1 fw-bold">Welcome to my adoption website!</div>
-    <div class="d-flex mt-3 justify-content-between">
-      <a href="/animals/add" class="fs-2 btn btn-primary mx-4">Add Animal</a>
-      <a href="/animals" class="fs-2 btn btn-secondary">Adoption Offers</a>
+    <div class="content-container px-4 d-inline-flex flex-column align-items-center">
+      <div class="fs-1 fw-bold">Welcome to my adoption website!</div>
+      <div class="d-flex mt-3 justify-content-between">
+        <a href="/animals/add" class="fs-2 btn btn-primary mx-4">Add Animal</a>
+        <a href="/animals" class="fs-2 btn btn-secondary">Adoption Offers</a>
+      </div>
+      <div class="d-flex mt-3 justify-content-between">
+        <a
+                th:unless="${loginName == ''}"
+                href="/animals/my-offers"
+                class="fs-2 btn btn-secondary">
+          My Offers
+        </a>
+      </div>
     </div>
   </div>
 </div>

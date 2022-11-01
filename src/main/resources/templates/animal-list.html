@@ -5,16 +5,18 @@
 <div class="app">
   <div th:replace="fragments/header :: header"></div>
   <div class="container-lg text-center">
-    <h2 class="mt-4">Animal List</h2>
-    <div class="d-flex flex-wrap justify-content-center">
-      <div th:each="animal : ${animals}" style="padding: 1em">
-        <div class="card overflow-hidden" style="width: 15em;">
-          <img class="card-img-top" th:src="@{|https://placedog.net/300/300?id=${animal.id}|}" th:alt="${animal.name}">
-          <div class="card-body bg-light">
-            <div class="card-title fs-3" th:text="${animal.name}"></div>
-            <div class="card-text" th:text="'Age: ' + ${animal.age}"></div>
-            <div class="card-text mt-2" th:text="${animal.description}"></div>
-            <a th:href="@{|/animals/${animal.id}|}" class="btn btn-primary mt-3">Details</a>
+    <div class="content-container my-4">
+      <h2 class="mt-4 fw-bold" th:text="${title}"></h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div th:each="animal : ${animals}" style="padding: 1em">
+          <div class="card overflow-hidden" style="width: 15em;">
+            <img class="card-img-top" th:src="@{|https://placedog.net/300/300?id=${animal.id}|}" th:alt="${animal.name}">
+            <div class="card-body">
+              <div class="card-title fs-3 fw-semibold" th:text="${animal.name}"></div>
+              <div class="card-text" th:text="'Age: ' + ${animal.age}"></div>
+              <div class="card-text mt-2" th:text="${animal.description}"></div>
+              <a th:href="@{|/animals/${animal.id}|}" class="btn btn-primary mt-3">Details</a>
+            </div>
           </div>
         </div>
       </div>

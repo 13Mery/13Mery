@@ -29,16 +29,29 @@ public class AnimalController {
 
     @GetMapping
     public String animalsPage(Model model) {
-        List<Animal> animals = this.animalRepository.findAll();
+        List<Animal> animals = this.animalRepository.findAllByAdopter(null);
         model.addAttribute("formAnimal", new Animal());
         model.addAttribute("animals", animals);
+        model.addAttribute("title", "All Animals for Adoption");
+        return "animal-list";
+    }
+
+    @GetMapping("my-offers")
+    public String myAdoptionOffers(Model model, Principal principal) {
+        User user = userRepository.findByUsername(principal.getName());
+        List<Animal> animals = this.animalRepository.findAllByPoster(user);
+        model.addAttribute("formAnimal", new Animal());
+        model.addAttribute("animals", animals);
+        model.addAttribute("title", "My Adoption Offers");
         return "animal-list";
     }
 
     @GetMapping("/{id}")
-    public String animalDetails(Model model, @PathVariable Integer id) {
+    public String animalDetails(Model model, @PathVariable Integer id, Principal principal) {
         Animal animal = animalRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        boolean ownAnimal = principal != null && animal.getPoster().getUsername().equals(principal.getName());
         model.addAttribute("animal", animal);
+        model.addAttribute("ownAnimal", ownAnimal);
         return "animal";
     }
 
@@ -54,5 +67,10 @@ public class AnimalController {
         animal.setPoster(poster);
         this.animalRepository.save(animal);
         return animalsPage(model);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAnimal(@PathVariable Integer id) {
+        animalRepository.deleteById(id);
     }
 }

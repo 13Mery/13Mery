@@ -27,6 +27,10 @@ public class Animal {
     @JoinColumn(name="poster_id", nullable = false)
     private User poster;
 
+    @ManyToOne
+    @JoinColumn(name="adopter_id")
+    private User adopter;
+
     public String getPosterName() {
         return this.poster.getName();
     }
