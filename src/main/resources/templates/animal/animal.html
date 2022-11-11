@@ -14,8 +14,8 @@
           <div class="card-text mt-2" th:text="${animal.description}"></div>
           <div class="card-text mt-2" th:text="'Posted by: ' + ${animal.posterName}"></div>
           <div class="d-flex align-items-center justify-content-center mt-3">
-            <a th:unless="${ownAnimal}" href="#" class="d-block btn btn-primary mx-2">Adopt</a>
-            <div th:onclick="'deleteAnimal(' + ${animal.id} + ')'" class="btn btn-danger">Delete</div>
+            <a th:unless="${ownAnimal || loginName == ''}" th:href="@{|/adopt/${animal.id}|}" class="d-block btn btn-primary mx-2">Adopt</a>
+            <div th:if="${ownAnimal}" th:onclick="'deleteAnimal(' + ${animal.id} + ')'" class="btn btn-danger">Delete</div>
           </div>
         </div>
       </div>

@@ -12,6 +12,12 @@
           <div class="card overflow-hidden" style="width: 15em;">
             <img class="card-img-top" th:src="@{|https://placedog.net/300/300?id=${animal.id}|}" th:alt="${animal.name}">
             <div class="card-body">
+              <div
+                      th:if="${myOffers != null && myOffers && animal.openRequestCount() > 0}"
+                      class="adoption-request-notification"
+              >
+                <span th:text="${animal.openRequestCount()}"></span> adoption requests!
+              </div>
               <div class="card-title fs-3 fw-semibold" th:text="${animal.name}"></div>
               <div class="card-text" th:text="'Age: ' + ${animal.age}"></div>
               <div class="card-text mt-2" th:text="${animal.description}"></div>

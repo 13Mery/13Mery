@@ -43,7 +43,7 @@ public class AnimalService {
                 "Cei mai cuminti baieti",
                 "Bun pentru copii",
                 "Are nevoie de o sansa",
-                "Este foarte bland",
+                "Este foarte blanda",
                 "Gasit in sant",
                 "Este schiop, micul de el"
         };

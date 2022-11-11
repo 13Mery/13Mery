@@ -1,13 +1,12 @@
 package com.maria.adoption.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +30,17 @@ public class Animal {
     @JoinColumn(name="adopter_id")
     private User adopter;
 
+    @OneToMany(mappedBy = "animal")
+    private Set<AdoptionRequest> adoptionRequests;
+
     public String getPosterName() {
         return this.poster.getName();
+    }
+
+    public long openRequestCount() {
+        return adoptionRequests
+                .stream()
+                .filter(adoptionRequest -> !adoptionRequest.getAccepted())
+                .count();
     }
 }

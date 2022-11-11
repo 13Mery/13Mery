@@ -33,7 +33,7 @@ public class AnimalController {
         model.addAttribute("formAnimal", new Animal());
         model.addAttribute("animals", animals);
         model.addAttribute("title", "All Animals for Adoption");
-        return "animal-list";
+        return "animal/animal-list";
     }
 
     @GetMapping("my-offers")
@@ -43,7 +43,8 @@ public class AnimalController {
         model.addAttribute("formAnimal", new Animal());
         model.addAttribute("animals", animals);
         model.addAttribute("title", "My Adoption Offers");
-        return "animal-list";
+        model.addAttribute("myOffers", true);
+        return "animal/animal-list";
     }
 
     @GetMapping("/{id}")
@@ -52,13 +53,13 @@ public class AnimalController {
         boolean ownAnimal = principal != null && animal.getPoster().getUsername().equals(principal.getName());
         model.addAttribute("animal", animal);
         model.addAttribute("ownAnimal", ownAnimal);
-        return "animal";
+        return "animal/animal";
     }
 
     @GetMapping("/add")
     public String animalForm(Model model) {
         model.addAttribute("formAnimal", new Animal());
-        return "add-animal";
+        return "animal/add-animal";
     }
 
     @PostMapping

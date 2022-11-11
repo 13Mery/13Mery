@@ -1,14 +1,12 @@
 package com.maria.adoption.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,8 +26,11 @@ public class User {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "poster")
-    private Set<Animal> adoption_offers;
+    private Set<Animal> adoptionOffers;
 
     @OneToMany(mappedBy = "adopter")
-    private Set<Animal> adopted_animals;
+    private Set<Animal> adoptedAnimals;
+
+    @OneToMany(mappedBy = "requester")
+    private Set<AdoptionRequest> adoptionRequests;
 }
