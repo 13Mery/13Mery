@@ -19,7 +19,7 @@ public class AdoptionRequest {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="request_id")
+    @JoinColumn(name="animal_id")
     private Animal animal;
 
     @ManyToOne

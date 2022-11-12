@@ -16,6 +16,8 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private final Random random = new Random();
+
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleRepository roleRepository,
@@ -47,6 +49,7 @@ public class UserService {
             admin.setUsername("admin");
             admin.setName("Maria");
             admin.setPassword("admin");
+            admin.setPhoneNumber(this.getRandomPhoneNumber());
             admin.setRoles(Set.of(adminRole));
             this.saveUser(admin);
         }
@@ -61,6 +64,7 @@ public class UserService {
             user.setUsername("test" + num);
             user.setPassword("test");
             user.setName("Test User " + num);
+            user.setPhoneNumber(this.getRandomPhoneNumber());
             user.setRoles(Set.of(userRole));
             testUsers.add(user);
             this.saveUser(user);
@@ -79,5 +83,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
+    public String getRandomPhoneNumber() {
+        return "072" + random.nextInt(1_000_000, 10_000_000);
+    }
 }

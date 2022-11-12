@@ -32,20 +32,33 @@ public class AdoptionController {
         this.adoptionRequestRepository = adoptionRequestRepository;
     }
 
-    @GetMapping("/{id}")
-    public String animalAdoptPage(Model model, @PathVariable Integer id) {
+    @GetMapping("/{animal_id}")
+    public String animalAdoptPage(Model model, @PathVariable Integer animal_id) {
         AdoptionRequest adoptionRequest = new AdoptionRequest();
         model.addAttribute("adoptionRequest", adoptionRequest);
-        model.addAttribute("animalId", id);
+        model.addAttribute("animalId", animal_id);
         return "adoption/adopt-animal";
     }
 
-    @PostMapping("/{id}")
+    @GetMapping("/requests/{animal_id}")
+    public String adoptionRequests(Model model, @PathVariable Integer animal_id, Principal principal) {
+        Animal animal = animalRepository.findById(animal_id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        if (principal == null || !animal.getPoster().getUsername().equals(principal.getName())) {
+            throw new RuntimeException("Only poster of animal can view adoption requests for it.");
+        }
+        model.addAttribute("animal", animal);
+        model.addAttribute("title", "Adoption Requests for " + animal.getName());
+        return "adoption/adoption-requests";
+    }
+
+    @PostMapping("/{animal_id}")
     public String animalAdopt(
-            @PathVariable Integer id,
+            @PathVariable Integer animal_id,
             @ModelAttribute AdoptionRequest adoptionRequest,
             Principal principal) {
-        Animal animal = animalRepository.findById(id).orElseThrow(
+        Animal animal = animalRepository.findById(animal_id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
         adoptionRequest.setAnimal(animal);
@@ -54,5 +67,23 @@ public class AdoptionController {
         adoptionRequestRepository.save(adoptionRequest);
 
         return "adoption/request-thank-you";
+    }
+
+    @GetMapping("/accept/{id}")
+    public String acceptAdoption(Model model, @PathVariable Integer id, Principal principal) {
+        AdoptionRequest adoptionRequest = adoptionRequestRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+
+        if (principal == null || adoptionRequest.getAnimal().getPoster().getUsername().equals(principal.getName())) {
+            adoptionRequest.setAccepted(true);
+            model.addAttribute("phone", adoptionRequest.getRequester().getPhoneNumber());
+            model.addAttribute("requesterName", adoptionRequest.getRequester().getName());
+        }
+        else {
+            throw new RuntimeException("Adoption offer cannot be accepted by user who didn't post the animal");
+        }
+
+        return "adoption/accept-thank-you";
     }
 }

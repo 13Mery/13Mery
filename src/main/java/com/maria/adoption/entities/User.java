@@ -20,6 +20,7 @@ public class User {
     private String username;
     private String password;
     private String name;
+    private String phoneNumber;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "role_id"))

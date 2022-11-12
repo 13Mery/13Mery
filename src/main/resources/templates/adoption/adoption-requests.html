@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"><title></title></head>
+<body>
+<div class="app">
+  <div th:replace="fragments/header :: header"></div>
+  <div class="container-lg text-center">
+    <div class="content-container my-4">
+      <h2 class="mt-4 fw-bold" th:text="${title}"></h2>
+      <div class="d-flex flex-wrap justify-content-center">
+        <div th:each="request : ${animal.adoptionRequests}" style="padding: 1em">
+          <div class="card overflow-hidden" style="width: 15em;">
+            <div class="card-body">
+              <div class="card-title fs-3 fw-semibold" th:text="${request.getRequester().name}"></div>
+              <div class="card-text" th:text="'Other animals: ' + ${request.ownOtherAnimals}"></div>
+              <div class="card-text" th:text="'Have children: ' + ${request.haveChildren}"></div>
+              <div class="card-text" th:text="'Home description: ' + ${request.homeDescription}"></div>
+              <a th:href="@{|/adopt/accept/${request.id}|}" class="btn btn-primary mt-3">Accept Offer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head"><title></title></head>
+<body>
+<div class="app">
+  <div th:replace="fragments/header :: header"></div>
+  <div class="container py-4 d-flex flex-column align-items-center">
+    <div class="content-container px-4 d-inline-flex flex-column align-items-center">
+      <p style="font-weight: bold;">
+        Thank you for accepting the adoption request!<br>
+        Please contact <span th:text="${requesterName}"></span>
+        at the following phone number:
+      </p>
+      <div class="adoption-phone" th:text="${phone}"></div>
+      <a href="/" class="btn btn-primary">Back to Homepage</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
